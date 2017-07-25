@@ -1,4 +1,5 @@
 from enum import Enum
+
 # IPND Stage 2 Final Project
 
 # You've built a Mad-Libs game with some help from Sean.
@@ -30,7 +31,7 @@ from enum import Enum
 # How can you adapt that design to work with numbered blanks?
 
 # If you need help, you can sign up for a 1 on 1 coaching appointment: https://calendly.com/ipnd-1-1/20min/
-gui_bar = '='*50
+gui_bar = '=' * 50
 
 global_debug = True
 
@@ -38,7 +39,7 @@ global_debug = True
 def DebugMessage(message=""):
     """Displays a debug message if the global variable 'global_debug' is true"""
     if global_debug:
-        print("Debug_Message: "+ message)
+        print("Debug_Message: " + message)
     return 0
 
 
@@ -105,7 +106,7 @@ def game_menu(question="Hello", option=["Test"]):
         option.append("Quit")
         while True:
             print(question)
-            print("Options:"+ str(option))
+            print("Options:" + str(option))
             response = input(">")
 
             if response.lower() == option[number_of_options].lower():
@@ -129,7 +130,7 @@ def game_main():
     """Game Session starts with user slelecting game difficulty level"""
     DebugMessage(game_main.__name__ + " is running")
     DebugMessage("Game Menu started")
-    #Loop though game menu till user quits
+    # Loop though game menu till user quits
     while True:
         print("\r\r")
         print("Would you like to play a game?")
@@ -142,14 +143,18 @@ def game_main():
 
 def game_session(game):
     DebugMessage(game_session.__name__ + " is running")
-    #print("\n"*10)
+    # print("\n"*10)
     print("Game Level: " + str(game))
     print(gui_bar)
     print(QASet(game))
 
     pass
+
+
 gameLevels = (list(GameDifficulty.__members__))
-MyGame = GameDifficulty.Easy
-game_session(MyGame)
+selected_game_difficulty = GameDifficulty.Easy
+
+# TODO: Game Menu difficulty selecter (user input)
+game_session(selected_game_difficulty)
 
 print(gameLevels)
