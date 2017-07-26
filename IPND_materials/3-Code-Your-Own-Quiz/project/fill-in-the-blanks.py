@@ -51,6 +51,7 @@ class GameDifficulty(Enum):
     Medium = 5
     Hard = 3
 
+
 def menu_selection(question="Hello", option=[]):
     """Builds a menu which takes a message [question] with options list [options] and returns the users selected option.
         Quit is always an option"""
@@ -92,8 +93,9 @@ def game_main():
         selection = menu_selection("Select a difficulty level:", gamelevels)
         game_session(selection)
 
-def QASet(game_difficulty):
-    """Contains the Question and Answers set for each game dificulty.  Need to define a difficulty to execute"""
+
+def quizitems(game_difficulty):
+    """Contains the Question and Answers set for each game difficulty."""
     DebugMessage(f"""QASet, args: game_difficulty={game_difficulty}""")
 
     if game_difficulty == GameDifficulty.Easy.name:
@@ -149,7 +151,7 @@ def game_session(dificulty_level):
     print(gui_bar)
 
     #
-    myGame_FillInBlankMessage, myGame_answers, myGame_attempts = QASet(dificulty_level)
+    myGame_FillInBlankMessage, myGame_answers, myGame_attempts = quizitems(dificulty_level)
     # Fill-In-The-Blank Message used in QuizItem
     print(myGame_FillInBlankMessage)
     # The Answers used to match blanks in message
