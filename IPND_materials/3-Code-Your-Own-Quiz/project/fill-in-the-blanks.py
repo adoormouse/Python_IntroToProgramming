@@ -45,10 +45,10 @@ def DebugMessage(message=""):
 
 
 class GameDifficulty(Enum):
-    """Defines game difficulty levels for QASet()
+    """Defines game difficulty levels Name and Values for QASet()
     https://docs.python.org/3/library/enum.html"""
-    Easy = 1
-    Medium = 2
+    Easy = 10
+    Medium = 5
     Hard = 3
 
 def menu_selection(question="Hello", option=["Test"]):
@@ -106,7 +106,8 @@ def QASet(game_difficulty):
                    '___3___': 'None',
                    '___4___': 'something'
                    }
-        return text, answers
+        attempts = GameDifficulty.Easy.value
+        return text, answers, attempts
     elif game_difficulty == GameDifficulty.Medium.name:
         text = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
             adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
@@ -118,7 +119,8 @@ def QASet(game_difficulty):
                    '___3___': 'something',
                    '___4___': 'something'
                    }
-        return text, answers
+        attempts = GameDifficulty.Medium.value
+        return text, answers, attempts
     elif game_difficulty == GameDifficulty.Hard.name:
         text = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
             adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
@@ -130,7 +132,8 @@ def QASet(game_difficulty):
                    '___3___': 'something',
                    '___4___': 'something'
                    }
-        return text, answers
+        attempts = GameDifficulty.Hard.value
+        return text, answers, attempts
     else:
         return -1
 
@@ -143,10 +146,16 @@ def game_session(dificulty_level):
         exit(1)
     print("Game Level: " + str(dificulty_level))
     print(gui_bar)
-    myGameQuestion, myGameAnswers = QASet(dificulty_level)
+    myGameQuestion, myGameAnswers, myGameAttempts = QASet(dificulty_level)
     print(myGameQuestion)
     print(myGameAnswers)
+    print(myGameAttempts)
 
+    # TODO While myGameAttempts > 0 run game session
+    # TODO Game QuizItem checks for user input matching myGameAnswers to question(___#___) against answer
+    # TODO If answer is incorrect, -1 myGameAttempts, and repeat.  Otherwise, continue.
+    # TODO replace correct answer in myGameQuestion
+    # TODO ask next question/answer till all questions are correctly marched or attempts <= 0
 
 
 
