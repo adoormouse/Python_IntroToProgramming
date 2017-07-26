@@ -55,7 +55,7 @@ def DebugSetValue(variable_name, orig_value, new_value):
 class GameLevels(Enum):
     """Defines game difficulty levels Name and Values for QASet()
     https://docs.python.org/3/library/enum.html"""
-    Easy = 1
+    Easy = 10
     Medium = 5
     Hard = 2
 
@@ -164,7 +164,7 @@ def quiz(fill_in_blank_text, blank_item, correct_answer):
 
 
 def game_session(difficulty_level):
-    """Initializes the game based on selected level in GameDifficulty and retrieves the quiz from quizitems"""
+    """Initializes and starts the game based on selected level in GameDifficulty and retrieves the quiz from quizitems"""
     DebugMessage(f"def:game_session | game={difficulty_level}")
 
     # Verify correct parameters/values are passed in before continuing, exit for debugging
@@ -190,22 +190,27 @@ def game_session(difficulty_level):
     my_answer_list = list(myGame_answers.keys())
     my_formatted_text = myGame_FillInBlankText.format(*my_answer_list)
 
-    index = 0
+    # TODO is there a better way to track the index? in the iterable for loop?
+    index = 0 # used to track which value to replace in text
+    # Ask question/answer till all questions are correctly matched or attempts <= 0
     for key, val in myGame_answers.items():
         DebugMessage("key={key}, val={val}")
         print(f"Guesses Remaining: {myGame_attempts}")
         print("")
-        # TODO Ask for user input matching to match the blank item with the correct answer
-        while not quiz(my_formatted_text, key, val):
+        # Quiz will ask for user input matching to match the blank item(key) with the correct answer (val)
+        while not quiz(my_formatted_text, key, val): # returns true when answer is correct.
+            # If answer is incorrect, this loop will repeat and -1 myGameAttempts.
             myGame_attempts -= 1
             print(f"Remaining guesses: {myGame_attempts}")
             print("")
-            # TODO if remaining attempts is 0, end game session
+            #  If remaining attempts is 0, end game session
             if myGame_attempts <= 0:
                 print(".....Game Over, try again?")
                 print("\n\n")
                 return 0
         my_answer_list[index] = val
+
+        # When answer correct, loop won't be entered. Replace correct answer in myGame_FillInBlankMessage
         my_formatted_text = myGame_FillInBlankText.format(*my_answer_list)
         print("That is correct!")
         print(gui_bar)
@@ -215,13 +220,6 @@ def game_session(difficulty_level):
     print("")
     print("Congratulations, you've won! Another Game?")
     print("")
-
-
-
-    # TODO If answer is incorrect, -1 myGameAttempts, and repeat.  Otherwise, continue.
-    # TODO If correct, replace correct answer in myGame_FillInBlankMessage
-    # TODO ask next question/answer till all questions are correctly marched or attempts <= 0
-
 
 
 game_main()
