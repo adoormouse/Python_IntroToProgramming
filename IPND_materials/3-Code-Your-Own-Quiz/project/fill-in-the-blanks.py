@@ -44,14 +44,6 @@ def DebugMessage(message=""):
     if global_debug:
         print("\033[93m DEBUG: " + message + "\033[0m")
 
-""" Method to use test values [not used]
-def DebugSetValue(variable_name, orig_value, new_value):
-    if global_debug:
-        DebugMessage(f"Setting {variable_name} from {orig_value} to {new_value}")
-        return new_value
-    return orig_value
-"""
-
 class GameLevels(Enum):
     """Defines game difficulty levels Name and Values for QASet()
     https://docs.python.org/3/library/enum.html"""
@@ -110,27 +102,36 @@ def quizitems(gamelevel):
     # TODO Create unique game messages for each level
 
     if gamelevel == GameLevels.Easy.name:
-        quiztext = '''  A {0} is created with the def keyword. You specify the inputs a {0} takes by
-adding {1} separated by commas between the parentheses. {0}s by default return {2} if you
-don't specify the value to return. {1} can be standard data types such as string, number, dictionary,
-tuple, and {3} or can be more complicated such as objects and lambda functions.'''
+        quiztext = '''A common first thing to do in a language is display
+'Hello {0}!'  In {1} this is particularly easy; all you have to do
+is type in:
+{2} "Hello {0}!"
+Of course, that isn't a very useful thing to do. However, it is an
+example of how to output to the user using the {2} command, and
+produces a program which does something, so it is useful in that capacity.
 
-        answers = {'___1___': 'function',
-                   '___2___': 'variable',
-                   '___3___': 'None',
-                   '___4___': 'something'
+It may seem a bit odd to do something in a Turing complete language that
+can be done even more easily with an {3} file in a browser, but it's
+a step in learning {1} syntax, and that's really its purpose.
+'''
+
+        answers = {'___1___': 'world',
+                   '___2___': 'python',
+                   '___3___': 'print',
+                   '___4___': 'HTML'
                    }
         attempts = GameLevels.Easy.value
         return quiztext, answers, attempts
     elif gamelevel == GameLevels.Medium.name:
-        quiztext = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
-        adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
-        don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
-        tuple, and ___4___ or can be more complicated such as objects and lambda functions.'''
+        quiztext = '''  A {0} is created with the def keyword. You specify the 
+inputs a {0} takes by adding {1} separated by commas between the parentheses. 
+{0}s by default return {2} if you don't specify the value to return. {1} can be 
+standard data types such as string, number, dictionary, tuple, and {3} or can be 
+more complicated such as objects and lambda functions.'''
 
-        answers = {'___1___': 'functions',
-                   '___2___': 'something',
-                   '___3___': 'something',
+        answers = {'___1___': 'function',
+                   '___2___': 'variable',
+                   '___3___': 'None',
                    '___4___': 'something'
                    }
         attempts = GameLevels.Medium.value
