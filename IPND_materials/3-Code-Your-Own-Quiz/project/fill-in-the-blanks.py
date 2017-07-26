@@ -33,14 +33,15 @@ from enum import Enum
 # If you need help, you can sign up for a 1 on 1 coaching appointment: https://calendly.com/ipnd-1-1/20min/
 gui_bar = '=' * 50
 
+# Enable debugging by setting 'global_debug = True'
 global_debug = True
 
 
 def DebugMessage(message=""):
-    """Displays a debug message if the global variable 'global_debug' is true"""
+    """Displays a debug message if the global variable 'global_debug' is true
+       Text Colors: https://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python"""
     if global_debug:
-        print("Debug_Message: " + message)
-    return 0
+        print("\033[93m DEBUG: " + message + "\033[0m")
 
 
 class GameDifficulty(Enum):
@@ -50,11 +51,49 @@ class GameDifficulty(Enum):
     Medium = 2
     Hard = 3
 
+def menu_selection(question="Hello", option=["Test"]):
+    """Builds a menu which takes a message [question] with options list [options] and returns the users selected option.
+        Quit is always an option"""
+    DebugMessage(f"""def:menu_selection | question={question} | option={option}""")
 
-def QASet(game):
+    # Add option='Quit' if does not exist and display the menu
+    if "Quit" not in option:
+        option.append("Quit")
+
+    def displaymenu(option):
+        DebugMessage(f"""def:displaymenu | option={option}""")
+        print(question)
+        print("Options:" + str(option))
+        response = input(">")
+
+        for opt in option:
+            if response.lower() == opt.lower():
+                DebugMessage(f"User selected a valid option:{opt}")
+                if opt == 'Quit':
+                    exit(0)
+                return opt
+        print(f"{response}, is not a valid option")
+        print(gui_bar)
+
+    return displaymenu(option)
+
+
+def game_main():
+    """Game Session starts with user slelecting game difficulty level"""
+    DebugMessage("""def:game_main""")
+    gamelevels = (list(GameDifficulty.__members__))
+
+    # Loop though game menu till user quits
+    while True:
+        print("\r\r")
+        print("Would you like to play a game?")
+        print(gui_bar)
+        selection = menu_selection("Select a difficulty level:", gamelevels)
+        game_session(selection)
+
+def QASet(game_difficulty):
     """Contains the Question and Answers set for each game dificulty.  Need to define a difficulty to execute"""
-    DebugMessage(f"{QASet.__name__ },  game :{game}")
-    game_difficulty = game.name
+    DebugMessage(f"""QASet, args: game_difficulty={game_difficulty}""")
 
     if game_difficulty == GameDifficulty.Easy.name:
         text = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
@@ -68,7 +107,7 @@ def QASet(game):
                    '___4___': 'something'
                    }
         return text, answers
-    elif game_difficulty == GameDifficulty().Medium.name:
+    elif game_difficulty == GameDifficulty.Medium.name:
         text = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
             adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
             don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
@@ -80,7 +119,7 @@ def QASet(game):
                    '___4___': 'something'
                    }
         return text, answers
-    elif game_difficulty == GameDifficulty().Hard.name:
+    elif game_difficulty == GameDifficulty.Hard.name:
         text = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
             adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
             don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
@@ -95,66 +134,20 @@ def QASet(game):
     else:
         return -1
 
-
-def game_menu(question="Hello", option=["Test"]):
-    """Menu which takes a message [question] with options list [options] and returns the users selected option.
-        Quit is always an option"""
-    DebugMessage(game_menu.__name__ + " is running")
-    number_of_options = len(option)
-    # Check if options list and question is empty
-    if number_of_options > 0:
-        option.append("Quit")
-        while True:
-            print(question)
-            print("Options:" + str(option))
-            response = input(">")
-
-            if response.lower() == option[number_of_options].lower():
-                print("Good bye!")
-                exit(0)
-
-            for opt in option:
-                if opt.lower() == response.lower():
-                    print("Valid Response")
-                    print(opt)
-                    return opt
-
-            print(f"{response}, is not a valid option")
-            print(gui_bar)
-
-    else:
-        return -1
-
-
-def game_main():
-    """Game Session starts with user slelecting game difficulty level"""
-    DebugMessage(game_main.__name__ + " is running")
-    DebugMessage("Game Menu started")
-    # Loop though game menu till user quits
-    while True:
-        print("\r\r")
-        print("Would you like to play a game?")
-
-        print(gui_bar)
-        GameLevel = game_menu("Pick a difficulty", levels)
-        gameSession(GameLevel)
-        print("\n\n")
-
-
-def game_session(game):
-    DebugMessage(game_session.__name__ + " is running")
+def game_session(dificulty_level):
+    """The begging of a game"""
+    DebugMessage(f"""def:game_session | game={dificulty_level}""")
     # print("\n"*10)
-    print("Game Level: " + str(game))
+    if dificulty_level == None:
+        DebugMessage("Invalid game type selected")
+        exit(1)
+    print("Game Level: " + str(dificulty_level))
     print(gui_bar)
-    print(QASet(game))
+    myGameQuestion, myGameAnswers = QASet(dificulty_level)
+    print(myGameQuestion)
+    print(myGameAnswers)
 
-    pass
 
 
-gameLevels = (list(GameDifficulty.__members__))
-selected_game_difficulty = GameDifficulty.Easy
 
-# TODO: Game Menu difficulty selecter (user input)
-game_session(selected_game_difficulty)
-
-print(gameLevels)
+game_main()
