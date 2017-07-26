@@ -51,7 +51,7 @@ class GameDifficulty(Enum):
     Medium = 5
     Hard = 3
 
-def menu_selection(question="Hello", option=["Test"]):
+def menu_selection(question="Hello", option=[]):
     """Builds a menu which takes a message [question] with options list [options] and returns the users selected option.
         Quit is always an option"""
     DebugMessage(f"""def:menu_selection | question={question} | option={option}""")
@@ -74,6 +74,7 @@ def menu_selection(question="Hello", option=["Test"]):
                 return opt
         print(f"{response}, is not a valid option")
         print(gui_bar)
+        displaymenu(option)
 
     return displaymenu(option)
 
@@ -139,17 +140,22 @@ def QASet(game_difficulty):
 
 def game_session(dificulty_level):
     """The begging of a game"""
-    DebugMessage(f"""def:game_session | game={dificulty_level}""")
+    DebugMessage(f"def:game_session | game={dificulty_level}")
     # print("\n"*10)
-    if dificulty_level == None:
-        DebugMessage("Invalid game type selected")
+    if dificulty_level not in GameDifficulty.__members__:
+        DebugMessage(f"Invalid game type received {dificulty_level}, exiting...")
         exit(1)
     print("Game Level: " + str(dificulty_level))
     print(gui_bar)
-    myGameQuestion, myGameAnswers, myGameAttempts = QASet(dificulty_level)
-    print(myGameQuestion)
-    print(myGameAnswers)
-    print(myGameAttempts)
+
+    #
+    myGame_FillInBlankMessage, myGame_answers, myGame_attempts = QASet(dificulty_level)
+    # Fill-In-The-Blank Message used in QuizItem
+    print(myGame_FillInBlankMessage)
+    # The Answers used to match blanks in message
+    print(myGame_answers)
+    # Attempts remaining based on GameDifficulty Enum values
+    print(myGame_attempts)
 
     # TODO While myGameAttempts > 0 run game session
     # TODO Game QuizItem checks for user input matching myGameAnswers to question(___#___) against answer
