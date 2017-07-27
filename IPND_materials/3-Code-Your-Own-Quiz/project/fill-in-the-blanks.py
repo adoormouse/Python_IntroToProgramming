@@ -2,7 +2,7 @@
 """fill_in_the_blanks.py: A game of filling in the blanks.  Player tries to guess the missing words within a given text."""
 
 __author__ = "Evan Daly"
-__email__ = "daly.evan@gmail.com"
+__email__ = "adoormouse@tuta.io"
 
 from enum import Enum
 # Enable debugging by setting 'global_debug = True'
