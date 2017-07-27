@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""fill_in_the_blanks.py: A game of filling in the blanks.  Player tries to guess the missing words within a given text."""
+
+__author__ = "Evan Daly"
+__email__ = "daly.evan@gmail.com"
+
 from enum import Enum
 # Enable debugging by setting 'global_debug = True'
 global_debug = False
@@ -35,7 +41,12 @@ global_debug = False
 # If you need help, you can sign up for a 1 on 1 coaching appointment: https://calendly.com/ipnd-1-1/20min/
 gui_bar = '=' * 49
 
-
+class GameLevels(Enum):
+    """Defines game difficulty levels Name and Values for QASet()
+    https://docs.python.org/3/library/enum.html"""
+    Easy = 10
+    Medium = 5
+    Hard = 2
 
 
 def DebugMessage(message=""):
@@ -43,13 +54,6 @@ def DebugMessage(message=""):
        Text Colors: https://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python"""
     if global_debug:
         print("\033[93m DEBUG: " + message + "\033[0m")
-
-class GameLevels(Enum):
-    """Defines game difficulty levels Name and Values for QASet()
-    https://docs.python.org/3/library/enum.html"""
-    Easy = 10
-    Medium = 5
-    Hard = 2
 
 
 def menu_selection(question="Hello", option=[]):
@@ -62,6 +66,7 @@ def menu_selection(question="Hello", option=[]):
         option.append("Quit")
 
     def displaymenu(option):
+        """Sub function used to manage case Quit was not a given option (User should always be able to quit)"""
         DebugMessage(f"""def:displaymenu | option={option}""")
         print(question)
         print("Options:" + str(option))
@@ -132,20 +137,35 @@ more complicated such as objects and lambda functions.'''
         answers = {'___1___': 'function',
                    '___2___': 'variable',
                    '___3___': 'None',
-                   '___4___': 'something'
+                   '___4___': 'list'
                    }
         attempts = GameLevels.Medium.value
         return quiztext, answers, attempts
     elif gamelevel == GameLevels.Hard.name:
-        answers = {'function': '___1___',
-                   'something0': '___2___',
-                   'something1': '___3___',
-                   'something2': '___4___'
+        quiztext = '''When you create a {0}, certain {1}s are automatically
+generated for you if you don't make them manually. These contain multiple
+underscores before and after the word defining them.  When you write
+a {0}, you almost always include at least the {2} {1}, defining
+variables for when {3}s of the {0} get made.  Additionally, you generally
+want to create a {4} {1}, which will allow a string representation
+of the method to be viewed by other developers.
+
+You can also create binary operators, like {5} and {6}, which
+allow + and - to be used by {3}s of the {0}.  Similarly, {7},
+{8}, and {9} allow {3}s of the {0} to be compared
+(with <, >, and ==).'''
+
+        answers = {'___1___':'class',
+                   '___2___':'method',
+                   '___3___':'__init__',
+                   '___4___':'instance',
+                   '___5___':'__repr__',
+                   '___6___':'__add__',
+                   '___7___':'__sub__',
+                   '___8___':'__lt__',
+                   '___9___':'__gt__',
+                   '___10___':'__eq__',
                    }
-        quiztext = f'''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
-        adding ___2___ separated by commas between the parentheses. ___1___s by default return ___3___ if you
-        don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
-        tuple, and ___4___ or can be more complicated such as objects and lambda functions.'''
 
         attempts = GameLevels.Hard.value
         return quiztext, answers, attempts
