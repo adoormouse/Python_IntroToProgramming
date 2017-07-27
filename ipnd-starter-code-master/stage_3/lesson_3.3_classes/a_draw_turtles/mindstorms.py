@@ -10,3 +10,19 @@
 import turtle
 
 # Your code here.
+def draw_square():
+    window = turtle.Screen()
+    window.bgcolor("red")
+
+
+    evan = turtle.Turtle()
+
+    i = 0
+    while i < 4:
+        i += 1
+        evan.forward(100)
+        evan.right(90)
+
+    window.exitonclick()
+
+draw_square()
