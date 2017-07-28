@@ -9,4 +9,28 @@
 
 import turtle
 
+offset = 45
+
+
 # Your code here.
+def draw_square():
+    window = turtle.Screen()
+    window.bgpic("iliketurtles.gif")
+    window.setup(width=400, height=400, startx=0, starty=0)
+    window.title("I Like Turtles")
+
+    myturtle = turtle.Turtle()
+    myturtle.speed(2)
+    myturtle.shape("turtle")
+
+    i = 0
+    myturtle.right(offset)
+    while i < 4:
+        i += 1
+        myturtle.forward(100)
+        myturtle.right(90)
+
+    window.exitonclick()
+
+
+draw_square()
