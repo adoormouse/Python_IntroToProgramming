@@ -21,8 +21,6 @@ class Shape:
 
 
     def draw(self):
-
-
         # Begin drawing
         turtle.pendown()
         turtle.speed(0)
@@ -35,14 +33,17 @@ class Shape:
             turtle.right(self.rotation)
 
 def triangle(size=100, offset=0):
+    """This draws a simple triangle (3-sides)"""
     myshape = Shape(3, size, offset)
     myshape.draw()
 
 def line(size=200, offset=0):
+    """Draws a line"""
     myshape = Shape(1, size, offset)
     myshape.draw()
 
 def draw_flower():
+    """Uses triangle and line objects to draw a flower, also creates the window which to draw objects in"""
     # initialize window
     window = turtle.Screen()
     window.bgpic("iliketurtles.gif")

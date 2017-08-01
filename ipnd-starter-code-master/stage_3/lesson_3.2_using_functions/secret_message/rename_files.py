@@ -24,7 +24,15 @@ def rename_files():
     os.chdir(r"./prank/")
 
     for file_name in file_list:
+        print("Origional: " + file_name)
         trans_table = file_name.maketrans("0123456789", "          ", "0123456789")
-        os.rename(file_name, file_name.translate(trans_table))
+        new_file_name = file_name.translate(trans_table)
+
+        # if there is no change, skip file
+        if file_name != new_file_name:
+            print("Renamed to: " + new_file_name)
+            os.rename(file_name, new_file_name)
+        else:
+            print("Skipping, nothing to translate")
 
 rename_files()
