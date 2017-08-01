@@ -9,15 +9,17 @@
 
 import turtle
 
+offset = 20
 # Your code here.
 def draw_square():
     window = turtle.Screen()
     window.bgcolor("red")
 
-
     evan = turtle.Turtle()
+    evan.speed(10)
 
     i = 0
+    evan.right(offset)
     while i < 4:
         i += 1
         evan.forward(100)
